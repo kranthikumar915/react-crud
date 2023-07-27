@@ -1,6 +1,20 @@
-import React from'react'
+import React, {useState} from'react'
 
 function Register(props){
+
+    const[reg,setReg] = useState({
+        user:'',
+        pass:''
+    })
+    const readValue = (event) => {
+        const{name,value} =event.target
+        setReg({...reg,[name]:value})
+    }
+    const submitHandler = (event) => {
+        event.preventDefault()
+        console.log(`new register =`,reg);
+    }
+
     return (
         <div className='container'>
             <div className="row">
@@ -15,11 +29,11 @@ function Register(props){
                             <form autoComplete='off'>
                                 <div className="form-group mt-2">
                                     <label htmlFor='user'>UserName</label>
-                                    <input type='email' name='user' id='user' className='form-control' required/>
+                                    <input type='email' name='user' value={reg.user} onChange={readValue} id='user' className='form-control' required/>
                                 </div>
                                 <div className="form-group mt-2">
                                     <label htmlFor='user'>Password</label>
-                                    <input type='password' name='pass' id='pass' className='form-control' required/>
+                                    <input type='password' name='pass' value={reg.pass} onChange={readValue} id='pass' className='form-control' required/>
                                 </div>
                                 <div className="form-group-mt-2">
                                     <input type='submit' value='Register' className='btn btn-warning'></input>

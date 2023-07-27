@@ -9,10 +9,13 @@ import Update from './component/Update'
 import Pnf from './component/Pnf'
 import PrivateRouter from './PrivateRoute/PrivateRouter'
 
+import { ToastContainer } from 'react-toastify'
+
 function App(props){
   return(
     <BrowserRouter>
         <Menu/>
+        
         <Routes>
          <Route element={<PrivateRouter/>}>
               <Route path={`/`} element={<Home/>}/>
