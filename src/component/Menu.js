@@ -1,11 +1,30 @@
 import React,{useContext} from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
+import Fireapp from "../Config/firebaseConfig";
+
+
+
 
 
 function Menu(props){
     const context = useContext(AuthContext)
     const currentUser = context.currentUser
+
+    const navigate = useNavigate()
+
+    //logout logic
+     const logoutUser = async ()=>{
+    if(window.confirm(`are you suree to logout?`)){
+        await Fireapp.auth().signOut
+        .then(res=>{
+            toast.success("user logout successfully")
+            navigate(`/`);
+        })
+        .catch(err => toast.error(err.message))
+    }
+}
+
     return (
        <nav className="navbar navbar-expand-md navbar-dark bg-primary">
         <div className="container">
@@ -20,14 +39,20 @@ function Menu(props){
             } id='menu'>
 
                 {
-                    currentUser ? (<ul className="navbar-nav">
+                    currentUser ? (
+                        <React.Fragment>
+                    <ul className="navbar-nav">
                             <li className="nav-item">
                                 <NavLink to={'/'} className="nav-link">Home</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to={'/create'} className="nav-link">Create</NavLink>
                             </li>
-                </ul>) : 
+                    </ul>
+                               <ul className="navbar-nav">
+                                <li className="nav-item">
+                               </li>
+                        </ul>) : 
                 (<ul className="navbar-nav">
                             <li className="nav-item">
                                 <NavLink to={`/login`} className="nav-link">Login</NavLink>
